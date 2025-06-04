@@ -69,3 +69,19 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 # trucking-interconecta
+
+## Running the backend
+
+The repository contains an Express based API in the `backend` directory. To run it locally:
+
+1. Install dependencies
+   ```bash
+   cd backend
+   npm install
+   ```
+2. Start the server
+   ```bash
+   npm start
+   ```
+
+Create a `.env` file based on `.env.example` with your PostgreSQL and JWT settings. The server listens on the port defined by `PORT`.
