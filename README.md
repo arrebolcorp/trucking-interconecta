@@ -1,71 +1,84 @@
-# Getting Started with Create React App
+# Trucking Interconecta
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Trucking Interconecta is a simple management system for planning and tracking
+freight trips. The project consists of a React front‑end and a Node.js
+back‑end (not included in this repository) that exposes a REST API.
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+### Front‑end
 
-### `npm start`
+```bash
+npm install
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Back‑end
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Clone the server repository or go to the `backend/` directory if it exists and
+install the dependencies:
 
-### `npm test`
+```bash
+cd backend
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Running the application
 
-### `npm run build`
+### Front‑end dev server
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The React app will be available at <http://localhost:3000>.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Back‑end API server
 
-### `npm run eject`
+```bash
+cd backend
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+By default the API runs on <http://localhost:4000>.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Environment variables
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Front‑end:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- `REACT_APP_API_URL` – URL of the back‑end API (e.g. `http://localhost:4000/api`).
 
-## Learn More
+Back‑end:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- `PORT` – port number for the API server.
+- `DATABASE_URL` – connection string for the database.
+- `JWT_SECRET` – secret used to sign authentication tokens.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## API usage examples
 
-### Code Splitting
+### Authenticate
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+curl -X POST $REACT_APP_API_URL/auth/login \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"user@example.com","password":"secret"}'
+```
 
-### Analyzing the Bundle Size
+The response contains a JSON Web Token that must be sent in subsequent
+requests.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Create a trip
 
-### Making a Progressive Web App
+```bash
+curl -X POST $REACT_APP_API_URL/trips \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer <TOKEN>" \
+  -d '{"origin":"City A","destination":"City B","driverId":1,"truckId":2}'
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Tests
 
-### Advanced Configuration
+Run the React tests with:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# trucking-interconecta
+```bash
+npm test -- --watchAll=false
+```
